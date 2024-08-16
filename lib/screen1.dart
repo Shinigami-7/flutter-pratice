@@ -1,28 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pratice/screen2.dart';
 
-class ScreenA extends StatelessWidget {
+class DisplayScreen extends StatelessWidget {
+  final String userInput;
+  final TimeOfDay? selectedTime;
+
+  const DisplayScreen({Key? key, required this.userInput, this.selectedTime}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    // Example list of integers
-    List<int> numbers = [1, 2, 3, 4, 5];
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Screen A'),
+        title: const Text('Display Information'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate to Screen B with the list of integers
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ScreenB(numbers: numbers),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child:
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text('User Input: $userInput'),
+                      SizedBox(height: 20),
+                      Text('Selected Time: ${selectedTime != null ? selectedTime!.format(context) : 'No time selected'}'),
+                    ],
+                  ),
+                  SizedBox(height: 200,),
+                  ElevatedButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>InputScreen()));
+                  }, child: Text("Input"))
+                ],
               ),
-            );
-          },
-          child: Text('Go to Screen B'),
+
+            )
+          ],
         ),
       ),
     );
