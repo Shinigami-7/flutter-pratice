@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pratice/screen2.dart';
 
 class DisplayScreen extends StatelessWidget {
   final String userInput;
+  final int? numberInput;
   final TimeOfDay? selectedTime;
+  final DateTime? selectedDate;
 
-  const DisplayScreen({Key? key, required this.userInput, this.selectedTime}) : super(key: key);
+  const DisplayScreen({
+    Key? key,
+    required this.userInput,
+    this.numberInput,
+    this.selectedTime,
+    this.selectedDate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +25,13 @@ class DisplayScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              child:
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Text('User Input: $userInput'),
-                      SizedBox(height: 20),
-                      Text('Selected Time: ${selectedTime != null ? selectedTime!.format(context) : 'No time selected'}'),
-                    ],
-                  ),
-                  SizedBox(height: 200,),
-                  ElevatedButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>InputScreen()));
-                  }, child: Text("Input"))
-                ],
-              ),
-
-            )
+            Text('User Input: $userInput'),
+            const SizedBox(height: 20),
+            Text('Number Input: ${numberInput ?? 'No number entered'}'),
+            const SizedBox(height: 20),
+            Text('Selected Date: ${selectedDate != null ? selectedDate!.toLocal().toString().split(' ')[0] : 'No date selected'}'),
+            const SizedBox(height: 20),
+            Text('Selected Time: ${selectedTime != null ? selectedTime!.format(context) : 'No time selected'}'),
           ],
         ),
       ),
