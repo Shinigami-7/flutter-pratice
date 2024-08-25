@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pratice/SecondScreen.dart';
 
-class DisplayScreen extends StatelessWidget {
-  final String userInput;
-  final int? numberInput;
-  final TimeOfDay? selectedTime;
-  final DateTime? selectedDate;
-
-  const DisplayScreen({
-    Key? key,
-    required this.userInput,
-    this.numberInput,
-    this.selectedTime,
-    this.selectedDate,
-  }) : super(key: key);
-
+class CurrentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Display Information'),
+        title: Text('Current Page'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('User Input: $userInput'),
-            const SizedBox(height: 20),
-            Text('Number Input: ${numberInput ?? 'No number entered'}'),
-            const SizedBox(height: 20),
-            Text('Selected Date: ${selectedDate != null ? selectedDate!.toLocal().toString().split(' ')[0] : 'No date selected'}'),
-            const SizedBox(height: 20),
-            Text('Selected Time: ${selectedTime != null ? selectedTime!.format(context) : 'No time selected'}'),
-          ],
+      body: Center(
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the next page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Secondscreen()),
+            );
+          },
+          child: Container(
+            height: 100,
+            width: 200,
+            color: Colors.blue,
+            child: Center(
+              child: Text(
+                'Tap Here',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+          ),
         ),
       ),
     );
