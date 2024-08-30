@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Secondscreen extends StatelessWidget {
-  const Secondscreen ({super.key});
+class SecondScreen extends StatelessWidget {
+  final String text;
+
+  SecondScreen({required this.text});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: Container(
-    child: Text("Yo ko sho"),
-    ),
+      appBar: AppBar(
+        title: Text('Second Screen'),
+      ),
+      body: Center(
+        child: Text(
+          'Received text: $text',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
