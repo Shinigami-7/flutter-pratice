@@ -1,39 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pratice/SecondScreen.dart';
 
-class FirstScreen extends StatelessWidget {
-  final TextEditingController _textController = TextEditingController();
+class ScreenOne extends StatefulWidget {
+  @override
+  _ScreenOneState createState() => _ScreenOneState();
+}
+
+class _ScreenOneState extends State<ScreenOne> {
+  TimeOfDay? selectedTime;
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null && picked != selectedTime)
+      setState(() {
+        selectedTime = picked;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('First Screen'),
+        title: Text('Select Time'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                labelText: 'Enter some text',
-              ),
+            ElevatedButton(
+              onPressed: () => _selectTime(context),
+              child: Text('Pick Time'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              selectedTime != null ? selectedTime!.format(context) : 'No Time Selected',
+              style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Pass the entered text to the second screen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SecondScreen(
-                      text: _textController.text,
-                    ),
-                  ),
-                );
+                Navigator.pop(context, selectedTime != null ? selectedTime!.format(context) : null);
               },
-              child: Text('Go to Second Screen'),
+              child: Text('Done'),
             ),
           ],
         ),
