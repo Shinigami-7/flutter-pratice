@@ -1,53 +1,53 @@
 import 'package:flutter/material.dart';
 
-class ScreenOne extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _ScreenOneState createState() => _ScreenOneState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _ScreenOneState extends State<ScreenOne> {
-  TimeOfDay? selectedTime;
+class _HomeScreenState extends State<HomeScreen> {
+  List<Widget> containers = [];
 
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (picked != null && picked != selectedTime)
-      setState(() {
-        selectedTime = picked;
-      });
+  void _addContainer() {
+    setState(() {
+      containers.add(
+        Container(
+          width: double.infinity,  // Make container span the full width
+          height: 100,
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          color: Colors.blue,  // Set color to blue
+          child: Center(
+            child: Text(
+              'Hello World',
+              style: TextStyle(color: Colors.white, fontSize: 16),  // White text with some padding
+            ),
+          ),
+        ),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Time'),
+        title: Text('Add Containers Dynamically'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => _selectTime(context),
-              child: Text('Pick Time'),
-            ),
-            SizedBox(height: 20),
-            Text(
-              selectedTime != null ? selectedTime!.format(context) : 'No Time Selected',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, selectedTime != null ? selectedTime!.format(context) : null);
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: _addContainer,
+            child: Text('Add Container'),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: containers.length,
+              itemBuilder: (context, index) {
+                return containers[index];
               },
-              child: Text('Done'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
